@@ -27,21 +27,18 @@ const json = {
   ]
 };
 
-const select = (attributes) => {
-  return {
-    from: (json) => {
-      return {
-        where: (attribute, value) => {
-          return json
-            .users
-            .filter(user => user[attribute] === value)
-            .map(user => ({ [attributes[0]]: user[attributes[0]], [attributes[1]]: user[attributes[1]] }))
-        }
-      }
-    }
-  }
-}
+const where = (attributes, json) => (attribute, value) =>
+  json
+    .users
+    .filter(user => user[attribute] === value)
+    .map(user => ({ [attributes[0]]: user[attributes[0]], [attributes[1]]: user[attributes[1]] }));
 
-select(['id', 'name'])
+const from = (attributes) => (json) => ({ where: where(attributes, json) });
+
+const select = (attributes) => ({ from: from(attributes) })
+
+const result = select(['id', 'name'])
   .from(json)
-  .where('id', 1)
+  .where('id', 1);
+
+console.log(result);
