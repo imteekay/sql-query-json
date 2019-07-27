@@ -27,18 +27,31 @@ const json = {
   ]
 };
 
-const where = (attributes, json) => (attribute, value) =>
+/*
+select(attributes)
+  - attributes: Array of strings
+
+from(node)
+  - node: string
+
+where(attribute, attributeValue)
+  - attribute: string
+  - attributeValue: number
+*/
+
+const startEngine = (json) => (attributes) => ({ from: from(json, attributes) });
+
+const where = (json, attributes) => (attribute, value) =>
   json
-    .users
     .filter(user => user[attribute] === value)
     .map(user => ({ [attributes[0]]: user[attributes[0]], [attributes[1]]: user[attributes[1]] }));
 
-const from = (attributes) => (json) => ({ where: where(attributes, json) });
+const from = (json, attributes) => (node) => ({ where: where(json[node], attributes) });
 
-const select = (attributes) => ({ from: from(attributes) })
+const select = startEngine(json);
 
 const result = select(['id', 'name'])
-  .from(json)
+  .from('users')
   .where('id', 1);
 
 console.log(result);
