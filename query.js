@@ -41,10 +41,16 @@ where(attribute, attributeValue)
 
 const startEngine = (json) => (attributes) => ({ from: from(json, attributes) });
 
+const byAttributeValue = (attribute, value) => (node) => node[attribute] === value;
+
+const buildAttributes = (node) => (acc, attribute) => ({ ...acc, [attribute]: node[attribute] });
+
+const selectAttributes = (attributes) => (node) => attributes.reduce(buildAttributes(node), {});
+
 const where = (json, attributes) => (attribute, value) =>
   json
-    .filter(user => user[attribute] === value)
-    .map(user => ({ [attributes[0]]: user[attributes[0]], [attributes[1]]: user[attributes[1]] }));
+    .filter(byAttributeValue(attribute, value))
+    .map(selectAttributes(attributes));
 
 const from = (json, attributes) => (node) => ({ where: where(json[node], attributes) });
 
