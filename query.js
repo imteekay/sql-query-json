@@ -56,8 +56,8 @@ const from = (json, attributes) => (node) => ({ where: where(json[node], attribu
 
 const select = startEngine(json);
 
-const result = select(['id', 'name'])
+select(['id', 'name'])
   .from('users')
   .where('id', 1);
 
-console.log(result);
+module.exports = select;
