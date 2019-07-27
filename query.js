@@ -4,25 +4,19 @@ const json = {
       'id': 1,
       'name': 'TK',
       'age': 26,
-      'email': 'leandrotk100@gmail.com'
+      'email': 'tk@mail.com'
     },
     {
       'id': 2,
-      'name': 'Kazumi',
-      'age': 30,
-      'email': 'kazumi@gmail.com'
+      'name': 'Daniel',
+      'age': 25,
+      'email': 'dani@mail.com'
     },
     {
       'id': 3,
       'name': 'Kaio',
       'age': 11,
-      'email': 'kaio@gmail.com'
-    },
-    {
-      'id': 4,
-      'name': 'Dani',
-      'age': 25,
-      'email': 'dani@gmail.com'
+      'email': 'kaio@mail.com'
     }
   ]
 };
