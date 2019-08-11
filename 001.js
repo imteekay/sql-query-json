@@ -40,7 +40,7 @@ const buildAttributes = (node) => (acc, attribute) => ({ ...acc, [attribute]: no
 const executeQuery = (attributes, attribute, value) => (resultList, node) =>
   node[attribute] !== value
     ? resultList
-    : resultList.concat(attributes.reduce(buildAttributes(node), {}));
+    : [...resultList, attributes.reduce(buildAttributes(node), {})];
 
 const where = (json, attributes) => (attribute, value) =>
   json
