@@ -1,8 +1,4 @@
-const byAttributeValue = (attribute, value) => (node) => node[attribute] === value;
-
 const buildAttributes = (node) => (acc, attribute) => ({ ...acc, [attribute]: node[attribute] });
-
-const selectAttributes = (attributes) => (node) => attributes.reduce(buildAttributes(node), {});
 
 class SQL {
   constructor(json) {
@@ -27,8 +23,10 @@ class SQL {
 
   query() {
     return this.scopedJson
-      .filter(byAttributeValue(this.attribute, this.value))
-      .map(selectAttributes(this.attributes));;
+      .reduce((acc, node) => {
+        if (node[this.attribute] !== this.value) return acc;
+        return acc.concat(this.attributes.reduce(buildAttributes(node), {}));
+      }, []);
   }
 }
 
