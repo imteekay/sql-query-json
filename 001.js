@@ -38,9 +38,9 @@ const startEngine = (json) => (attributes) => ({ from: from(json, attributes) })
 const buildAttributes = (node) => (acc, attribute) => ({ ...acc, [attribute]: node[attribute] });
 
 const executeQuery = (attributes, attribute, value) => (resultList, node) =>
-  node[attribute] !== value
-    ? resultList
-    : [...resultList, attributes.reduce(buildAttributes(node), {})];
+  node[attribute] === value
+    ? [...resultList, attributes.reduce(buildAttributes(node), {})]
+    : resultList;
 
 const where = (json, attributes) => (attribute, value) =>
   json
